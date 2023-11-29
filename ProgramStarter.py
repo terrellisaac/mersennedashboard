@@ -1,11 +1,12 @@
 from PyQt6.QtWidgets import QPushButton, QLabel
 import subprocess
 import signal
+import os
 
 class StartButton:
-    def __init__(self, pgmName, programDir):
+    def __init__(self, pgmName, programExe):
         self.program = pgmName  # Name of the program this button will start
-        self.directory = programDir  # String with the file path of the exe we want this button to run
+        self.directory = programExe  # String with the exe we want this button to run
         lbl = ("Start " + pgmName)  # What the button label will say
         statusLbl = (pgmName + " is not running")
         self.buttonObject = QPushButton(lbl)  # Create the PyQt button object
@@ -13,9 +14,17 @@ class StartButton:
         self.pgmRunning = False
         self.processID = None  # subprocess's Popen function returns a PID
 
+
     def ClickedMe(self):
         if not self.pgmRunning:
-            self.processID = subprocess.Popen(self.directory)  # Run the exe at the file path that was captured in the init
+            # We have to run the programs in their local folders so they can access their files.
+            if self.program == "prime95":
+                os.chdir("./prime95")
+            if self.program == "mfaktc":
+                os.chdir("./mfaktc")
+            self.processID = subprocess.Popen(self.directory)  # Run the exe that was captured in the init
+            os.chdir("../")
+            # Go back to the main folder after we get the program started
             self.buttonObject.setText("Stop " + self.program)
             self.statusObject.setText(self.program + " is running")  # Change the button's label and the program status
             self.pgmRunning = True

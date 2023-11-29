@@ -5,9 +5,9 @@ from FactoringWorkHandler import FactoringWork  # See FactoringWorkHandler.py fo
 
 
 dashboard = QApplication([])  # The fundamental PyQt object. We build it iteratively
-p95Button = StartButton("prime95", "./prime95/prime95.exe")  # The user will be told to put prime95 here
+p95Button = StartButton("prime95", "prime95.exe")  # The user will be told to put prime95 here
 p95Button.buttonObject.clicked.connect(p95Button.ClickedMe)  # Link a PyQt button to a function definition
-mfaktcButton = StartButton("mfaktc", "./mfaktc/mfaktc.exe")
+mfaktcButton = StartButton("mfaktc", "mfaktc.exe")
 mfaktcButton.buttonObject.clicked.connect(mfaktcButton.ClickedMe)
 MainDash = QWidget()  # The main application window
 MainDash.setWindowTitle("Mersenne Dashboard")
