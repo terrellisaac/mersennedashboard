@@ -6,10 +6,12 @@ from FactoringWorkHandler import FactoringWork  # See FactoringWorkHandler.py fo
 
 
 mainDir = path.dirname(__file__)
+# Fetch the absolute directory that the dashboard is running in
 p95Dir = path.join(mainDir, "prime95")
 mfaktcDir = path.join(mainDir, "mfaktc")
+# The user will be told to put their applications here
 dashboard = QApplication([])  # The fundamental PyQt object. We build it iteratively
-p95Button = StartButton("prime95", "prime95.exe", p95Dir)  # The user will be told to put prime95 here
+p95Button = StartButton("prime95", "prime95.exe", p95Dir)
 p95Button.buttonObject.clicked.connect(p95Button.ClickedMe)  # Link a PyQt button to a function definition
 mfaktcButton = StartButton("mfaktc", "mfaktc.exe", mfaktcDir)
 mfaktcButton.buttonObject.clicked.connect(mfaktcButton.ClickedMe)
