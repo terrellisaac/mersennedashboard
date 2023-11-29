@@ -4,9 +4,10 @@ import signal
 import os
 
 class StartButton:
-    def __init__(self, pgmName, programExe):
+    def __init__(self, pgmName, programExe, pgmDirectory):
         self.program = pgmName  # Name of the program this button will start
-        self.directory = programExe  # String with the exe we want this button to run
+        self.application = programExe  # String with the exe we want this button to run
+        self.directory = pgmDirectory  # The absolute directory where the exe will be found
         lbl = ("Start " + pgmName)  # What the button label will say
         statusLbl = (pgmName + " is not running")
         self.buttonObject = QPushButton(lbl)  # Create the PyQt button object
@@ -18,11 +19,8 @@ class StartButton:
     def ClickedMe(self):
         if not self.pgmRunning:
             # We have to run the programs in their local folders so they can access their files.
-            if self.program == "prime95":
-                os.chdir("./prime95")
-            if self.program == "mfaktc":
-                os.chdir("./mfaktc")
-            self.processID = subprocess.Popen(self.directory)  # Run the exe that was captured in the init
+            os.chdir(self.directory)
+            self.processID = subprocess.Popen(self.application)  # Run the exe that was captured in the init
             os.chdir("../")
             # Go back to the main folder after we get the program started
             self.buttonObject.setText("Stop " + self.program)

@@ -1,13 +1,17 @@
 import sys
+from os import path
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QPushButton, QDialog, QVBoxLayout
 from ProgramStarter import StartButton  # See ProgramStarter.py for more details
 from FactoringWorkHandler import FactoringWork  # See FactoringWorkHandler.py for more details
 
 
+mainDir = path.dirname(__file__)
+p95Dir = path.join(mainDir, "prime95")
+mfaktcDir = path.join(mainDir, "mfaktc")
 dashboard = QApplication([])  # The fundamental PyQt object. We build it iteratively
-p95Button = StartButton("prime95", "prime95.exe")  # The user will be told to put prime95 here
+p95Button = StartButton("prime95", "prime95.exe", p95Dir)  # The user will be told to put prime95 here
 p95Button.buttonObject.clicked.connect(p95Button.ClickedMe)  # Link a PyQt button to a function definition
-mfaktcButton = StartButton("mfaktc", "mfaktc.exe")
+mfaktcButton = StartButton("mfaktc", "mfaktc.exe", mfaktcDir)
 mfaktcButton.buttonObject.clicked.connect(mfaktcButton.ClickedMe)
 MainDash = QWidget()  # The main application window
 MainDash.setWindowTitle("Mersenne Dashboard")
